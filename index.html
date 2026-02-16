@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>给你一个惊喜！</title>
+<style>
+    body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #f0f8ff;
+        font-family: 'Arial', sans-serif;
+        overflow: hidden;
+        margin: 0;
+    }
+    h1 {
+        position: absolute;
+        top: 20%;
+        color: #333;
+    }
+    #catchMeBtn {
+        position: absolute;
+        padding: 15px 30px;
+        font-size: 18px;
+        background-color: #ff4757;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: top 0.2s, left 0.2s; /* 让移动有平滑感 */
+    }
+</style>
+</head>
+<body>
+    <h1>点击下方按钮领取红包！</h1>
+    <button id="catchMeBtn">点我领取</button>
+
+    <script>
+        const btn = document.getElementById('catchMeBtn');
+        
+        // 当鼠标靠近按钮时触发移动
+        btn.addEventListener('mouseover', function() {
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            const btnWidth = btn.offsetWidth;
+            const btnHeight = btn.offsetHeight;
+
+            // 计算随机的新坐标
+            const randomX = Math.floor(Math.random() * (windowWidth - btnWidth));
+            const randomY = Math.floor(Math.random() * (windowHeight - btnHeight));
+
+            btn.style.left = randomX + 'px';
+            btn.style.top = randomY + 'px';
+        });
+
+        // 预防有人真的手速极快点到了
+        btn.addEventListener('click', function() {
+            alert('手速太快了！居然被你点到了！');
+        });
+    </script>
+</body>
+</html>
