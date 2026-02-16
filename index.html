@@ -11,37 +11,67 @@
         align-items: center;
         height: 100vh;
         background-color: #f0f8ff;
-        font-family: 'Arial', sans-serif;
+        font-family: 'Microsoft YaHei', 'Arial', sans-serif;
         overflow: hidden;
         margin: 0;
+        transition: background-color 0.5s; /* 背景色渐变平滑 */
     }
     h1 {
         position: absolute;
         top: 20%;
         color: #333;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
     }
     #catchMeBtn {
         position: absolute;
         padding: 15px 30px;
         font-size: 18px;
+        font-weight: bold;
         background-color: #ff4757;
         color: white;
         border: none;
-        border-radius: 5px;
+        border-radius: 8px;
         cursor: pointer;
-        transition: top 0.2s, left 0.2s; /* 让移动有平滑感 */
+        box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+        transition: top 0.15s, left 0.15s, background-color 0.3s; /* 让移动和变色有平滑感 */
     }
 </style>
 </head>
 <body>
-    <h1>点击下方按钮领取红包！</h1>
+    <h1 id="titleText">点击下方按钮领取红包！</h1>
     <button id="catchMeBtn">点我领取</button>
 
     <script>
         const btn = document.getElementById('catchMeBtn');
+        const title = document.getElementById('titleText');
+        
+        // 准备一些嘲讽的词汇
+        const taunts = [
+            '太慢啦！', 
+            '在这呢！', 
+            '抓不到我吧！', 
+            '快点快点！', 
+            '略略略~', 
+            '放弃吧！',
+            '手速不行啊！'
+        ];
+
+        // 随机颜色的函数
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+
+        let escapeCount = 0;
         
         // 当鼠标靠近按钮时触发移动
         btn.addEventListener('mouseover', function() {
+            escapeCount++;
+
             const windowWidth = window.innerWidth;
             const windowHeight = window.innerHeight;
             const btnWidth = btn.offsetWidth;
@@ -53,11 +83,24 @@
 
             btn.style.left = randomX + 'px';
             btn.style.top = randomY + 'px';
+
+            // 改变按钮文字（随机嘲讽）
+            btn.innerText = taunts[Math.floor(Math.random() * taunts.length)];
+            
+            // 改变按钮颜色
+            btn.style.backgroundColor = getRandomColor();
+
+            // 如果对方被戏耍了超过10次，改变大标题继续嘲讽
+            if (escapeCount > 10) {
+                title.innerText = "还点？真以为有红包啊？😏";
+            }
         });
 
-        // 预防有人真的手速极快点到了
+        // 预防有人真的手速极快点到了（终极惩罚：跳转B站经典恶搞视频）
         btn.addEventListener('click', function() {
-            alert('手速太快了！居然被你点到了！');
+            alert('竟然被你点到了...算你厉害！送你个大礼！');
+            // 跳转到著名的 Rickroll 恶搞视频
+            window.location.href = "https://www.bilibili.com/video/BV1GJ411x7h7/";
         });
     </script>
 </body>
